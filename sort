@@ -1,0 +1,23 @@
+def quick(m):
+    if len(m) < 2:
+        return m
+    else:
+        n = m[0]
+        m1 = [i for i in m[1:] if i <= n]
+        m2 = [i for i in m[1:] if i > n]
+        return quick(m1) + [n] + quick(m2)
+
+def comb(M):
+    step = int(len(M)/1.247) #1.247 - специальный коэффициент
+    swap = 1
+    while step > 1 or swap > 0:
+        swap = 0
+        i = 0
+        while i + step < len(M):
+            if M[i] > M[i+step]:
+                M[i], M[i+step] = M[i+step], M[i]
+                swap += 1
+            i = i + 1
+        if step > 1:
+            step -= int(step / 1.247)
+    return M
