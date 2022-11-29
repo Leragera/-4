@@ -1,0 +1,32 @@
+import sort
+import timeit
+
+a = int(input("Введите количество элементров: "))
+M = []
+print("Введите элементы массива")
+for i in range(a):
+    element = int(input())
+    M.append(element)
+
+print("Выберите способ сортировки: quick_sort = 1 or comb_sort = 2")
+a = int(input())
+if a == 1:
+    print(sort.quick(M))
+if a == 2:
+    print(sort.comb(M))
+else:
+    print("Повторите ввод")
+
+if a == 1:
+    start = timeit.default_timer()
+    sort.quick(M)
+    stop = timeit.default_timer()
+    r = stop - start
+    print("Время выполнения программы: ", r)
+
+if a == 2:
+    start = timeit.default_timer()
+    sort.comb(M)
+    stop = timeit.default_timer()
+    r = stop - start
+    print("Время выполнения программы: ", r)
