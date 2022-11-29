@@ -1,0 +1,54 @@
+def sort(M): #сортировка для каждого блока
+    for i in range(1, len(M)):
+        element = M[i]
+        while element < M[i-1] and i > 0:
+            M[i] = M[i-1]
+            i -= 1
+        M[i] = element
+    return M
+
+def minmax(M): #поиск минимальнго и максимального элементов в массиве
+    if len(M) == 0:
+        return [0, 0]
+    min_max = [M[0] , M[0]]
+    for i in M:
+        if i < min_max[0]:
+            min_max[0] = i
+        if i > min_max [1]:
+            min_max[1] = i
+    return min_max
+
+def block_sort(M, N): #блочная сортировка
+    blocks = []
+    for i in range(N):
+        blocks.append([])
+    min_max = minmax(M)
+    if min_max[0] == min_max[1]:
+        return M
+    for el in M:
+        blocks[N * (el - min_max[0]) // (min_max[1] - min_max[0] + 1)].append(el)
+    for block in blocks:
+        if len(block) <= 32:
+            sort(block)
+        else:
+            block_sort(block, N)
+    index = 0
+    for block in blocks:
+        for el in block:
+            M[index] = el
+            index += 1
+    return blocks
+
+a = int(input("Введите количество элементов массива: "))
+massiv = []
+print("Заполните массив")
+for j in range(a):
+    el = int(input())
+    massiv.append(el)
+
+n = int(input("Введите количесвто блоков: "))
+
+print("Изначальный массив:")
+print(massiv)
+print("Отсортированный массив:")
+print(block_sort(massiv, n))
