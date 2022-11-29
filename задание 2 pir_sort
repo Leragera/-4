@@ -1,0 +1,39 @@
+def pir(M, i, N):
+    i_l = 2 * i + 1
+    i_r = 2 * i + 2
+    i_max = i
+    if i_l <= N and M[i_l] > M[i_max]:
+        i_max = i_l
+    if i_r <= N and M[i_r] > M[i_max]:
+        i_max = i_r
+    if i_max == i:
+        return
+    else:
+        M[i_max], M[i] = M[i], M[i_max]
+        pir(M, i_max, N)
+    return M
+
+def build_max_heap(M):
+    mid = len(M) // 2
+    for j in reversed(range(0, mid + 1)):
+        pir(M, j, len(M) - 1)
+    return M
+
+def pir_sort(M):
+    build_max_heap(M)
+    for j in reversed(range(0, len(M))):
+        M[0], M[j] = M[j], M[0]
+        pir(M, 0, j -1)
+    return M
+
+a = int(input("Введите количество элементов массива: "))
+massiv = []
+print("Заполните массив")
+for i in range(a):
+    element = int(input())
+    massiv.append(element)
+
+print("Изначальный массив:")
+print(massiv)
+print("Отсортированный массив:")
+print(pir_sort(massiv))
